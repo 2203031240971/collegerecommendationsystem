@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your College Matches — EduMatch</title>
+  <meta name="description"
+    content="AI-powered personalized college recommendations based on your marks, stream, budget and preferences." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/results.css" />
+  <style>
+    /* ── Floating AI Chat Button ───────────────────────────────── */
+    .fab-chat {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 20px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 60%, #06b6d4 100%);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .2px;
+      box-shadow: 0 6px 24px rgba(99, 102, 241, 0.55), 0 2px 8px rgba(0, 0, 0, .4);
+      border: none;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      text-decoration: none;
+      animation: fabGlow 2.4s ease-in-out infinite;
+    }
+
+    .fab-chat:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 10px 32px rgba(99, 102, 241, 0.7), 0 4px 12px rgba(0, 0, 0, .4);
+    }
+
+    .fab-chat svg {
+      flex-shrink: 0
+    }
+
+    .fab-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+      animation: fabPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes fabGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 6px 24px rgba(99, 102, 241, 0.55), 0 2px 8px rgba(0, 0, 0, .4)
+      }
+
+      50% {
+        box-shadow: 0 8px 30px rgba(99, 102, 241, 0.8), 0 4px 12px rgba(0, 0, 0, .4)
+      }
+    }
+
+    @keyframes fabPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .5;
+        transform: scale(1.3)
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Ambient background -->
+  <div class="bg-mesh"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="EduMatch Home">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+          </svg>
+        </div>
+        <span class="brand-name">EduMatch</span>
+        <span class="brand-badge">AI Results</span>
+      </a>
+
+      <div class="nav-actions">
+        <button class="nav-btn" id="compareNavBtn" onclick="openComparePanel()" aria-label="Compare selected colleges">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="7" height="7" />
+            <rect x="15" y="3" width="7" height="7" />
+            <rect x="15" y="14" width="7" height="7" />
+            <rect x="2" y="14" width="7" height="7" />
+          </svg>
+          Compare <span class="compare-count" id="compareCount">0</span>
+        </button>
+        <a href="index.html" class="nav-btn ghost" aria-label="Start over with new search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10" />
+            <path d="M3.51 15a9 9 0 1 0 .49-3.41" />
+          </svg>
+          New Search
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══ RESULTS HEADER ══════════════════════════════════════════════ -->
+  <header class="results-header" id="resultsHeader">
+    <div class="header-inner">
+
+      <!-- Student greeting -->
+      <div class="student-greeting">
+        <div class="greeting-avatar" id="greetingAvatar">A</div>
+        <div>
+          <p class="greeting-label">Recommendations for</p>
+          <h1 class="greeting-name" id="greetingName">Loading…</h1>
+        </div>
+      </div>
+
+      <!-- Summary stats bar -->
+      <div class="summary-bar" id="summaryBar" role="region" aria-label="Match summary">
+        <div class="summary-stat" id="statTotal">
+          <span class="stat-val">—</span>
+          <span class="stat-lbl">Colleges Found</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-stat highlight-safe" id="statSafe">
+          <span class="stat-val safe">—</span>
+          <span class="stat-lbl">Safe Picks</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-stat" id="statMatch">
+          <span class="stat-val match">—</span>
+          <span class="stat-lbl">Match Picks</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-stat" id="statTop">
+          <span class="stat-val top">—%</span>
+          <span class="stat-lbl">Top Match Score</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-stat" id="statBudget">
+          <span class="stat-val budget">—</span>
+          <span class="stat-lbl">Avg Fee / Year</span>
+        </div>
+      </div>
+
+      <!-- Profile pill -->
+      <div class="profile-pill" id="profilePill">
+        <span class="profile-chip" id="chipMarks"></span>
+        <span class="profile-chip" id="chipStream"></span>
+        <span class="profile-chip" id="chipLocation"></span>
+        <span class="profile-chip" id="chipBudget"></span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ══ CONTROLS BAR ═══════════════════════════════════════════════ -->
+  <div class="controls-bar" id="controlsBar" role="toolbar" aria-label="Filter and sort results">
+    <div class="controls-inner">
+
+      <!-- Filter chips -->
+      <div class="filter-chips" role="group" aria-label="Filter by admission category">
+        <button class="chip active" id="chip-all" onclick="setFilter('all')" aria-pressed="true">All Results</button>
+        <button class="chip safe" id="chip-safe" onclick="setFilter('safe')" aria-pressed="false">🟢 Safe</button>
+        <button class="chip match" id="chip-match" onclick="setFilter('match')" aria-pressed="false">🔵 Match</button>
+        <button class="chip reach" id="chip-reach" onclick="setFilter('reach')" aria-pressed="false">🟡 Reach</button>
+        <button class="chip govt" id="chip-govt" onclick="setFilter('government')" aria-pressed="false">🏛 Govt</button>
+        <button class="chip priv" id="chip-priv" onclick="setFilter('private')" aria-pressed="false">🏫 Private</button>
+      </div>
+
+      <!-- Sort -->
+      <div class="sort-wrap">
+        <label class="sort-label" for="sortSelect">Sort by</label>
+        <select id="sortSelect" class="sort-select" onchange="applySort()" aria-label="Sort colleges by">
+          <option value="match_score">Match Score</option>
+          <option value="admission_chance">Admission Chance</option>
+          <option value="fee_per_year">Fee (Low → High)</option>
+          <option value="placement_avg">Avg Package</option>
+          <option value="rating">Rating</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ MAIN CONTENT ════════════════════════════════════════════════ -->
+  <main class="results-main" id="resultsMain" role="main">
+    <div class="results-wrapper">
+
+      <!-- AI Tip banner -->
+      <div class="ai-tip-banner" id="aiTipBanner" role="complementary" aria-label="AI recommendation tip">
+        <div class="ai-tip-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4" />
+            <path d="M12 8h.01" />
+          </svg>
+        </div>
+        <p class="ai-tip-text" id="aiTipText">Analyzing your profile…</p>
+      </div>
+
+      <!-- Cards grid -->
+      <div class="cards-grid" id="cardsGrid" aria-live="polite" aria-label="College results">
+        <!-- Injected by JS -->
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState" style="display:none" role="alert">
+        <div class="empty-icon">🔍</div>
+        <h2>No colleges match this filter</h2>
+        <p>Try switching to <strong>All Results</strong> or a different category.</p>
+        <button class="btn-outline" onclick="setFilter('all')">Show All</button>
+      </div>
+
+      <!-- Loading skeleton -->
+      <div class="skeleton-wrap" id="skeletonWrap" aria-busy="true" aria-label="Loading results">
+        <div class="skeleton-card">
+          <div class="sk sk-title"></div>
+          <div class="sk sk-line"></div>
+          <div class="sk sk-line short"></div>
+          <div class="sk sk-bars"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="sk sk-title"></div>
+          <div class="sk sk-line"></div>
+          <div class="sk sk-line short"></div>
+          <div class="sk sk-bars"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="sk sk-title"></div>
+          <div class="sk sk-line"></div>
+          <div class="sk sk-line short"></div>
+          <div class="sk sk-bars"></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ══ COMPARE PANEL ═══════════════════════════════════════════════ -->
+  <aside class="compare-panel" id="comparePanel" role="dialog" aria-modal="true" aria-label="Compare colleges"
+    style="display:none">
+    <div class="compare-overlay" onclick="closeComparePanel()"></div>
+    <div class="compare-drawer">
+      <div class="compare-header">
+        <h2>Compare Colleges</h2>
+        <button class="compare-close" onclick="closeComparePanel()" aria-label="Close compare panel">×</button>
+      </div>
+      <div class="compare-table-wrap">
+        <table class="compare-table" id="compareTable" aria-label="College comparison table">
+          <!-- Injected by JS -->
+        </table>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══ TOAST ══════════════════════════════════════════════════════ -->
+  <div class="toast-shelf" id="toastShelf" role="status" aria-live="polite"></div>
+
+  <!-- ══ BACK TO TOP ════════════════════════════════════════════════ -->
+  <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top"
+    style="display:none">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  </button>
+
+  <script src="js/results.js"></script>
+
+  <!-- Floating AI Chat button -->
+  <a href="chat.html" class="fab-chat" aria-label="Open AI College Advisor chat" id="fabChat">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+    Ask AI Advisor
+    <span class="fab-pulse"></span>
+  </a>
+
+</body>
+
+</html>

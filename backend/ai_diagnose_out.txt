@@ -1,0 +1,19 @@
+Step 1: Importing ai_college_search...
+Step 1: OK
+Step 2: Calling Gemini API...
+Step 2: Done
+ai_powered = True
+error flag = None
+
+EXCEPTION: UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f916' in position 10: character maps to <undefined>
+Traceback (most recent call last):
+  File "C:\Users\pdhar\OneDrive\Documents\Desktop\AI-powered college recommendation platform\backend\diagnose_ai.py", line 36, in <module>
+    log(f"message = {result.get('message')}")
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\pdhar\OneDrive\Documents\Desktop\AI-powered college recommendation platform\backend\diagnose_ai.py", line 14, in log
+    print(msg)
+    ~~~~~^^^^^
+  File "C:\Users\pdhar\Miniconda3\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f916' in position 10: character maps to <undefined>

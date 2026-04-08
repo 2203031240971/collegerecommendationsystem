@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduMatch — AI College Recommendation Platform</title>
+  <meta name="description" content="Fill in your academic details and let our AI find the perfect college for you. Personalized college recommendations based on your marks, budget, caste, and preferences." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <!-- Animated background blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+  <div class="bg-blob blob-3"></div>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <span class="brand-name">EduMatch</span>
+        <span class="brand-badge">AI-Powered</span>
+      </div>
+      <div class="nav-steps">
+        <div class="step-item active" id="step-nav-1">
+          <span class="step-dot"></span>
+          <span class="step-label">Personal Info</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item" id="step-nav-2">
+          <span class="step-dot"></span>
+          <span class="step-label">Academics</span>
+        </div>
+        <div class="step-divider"></div>
+        <div class="step-item" id="step-nav-3">
+          <span class="step-dot"></span>
+          <span class="step-label">Preferences</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-pill">
+        <span class="pill-dot"></span>
+        AI-Powered Matching Engine
+      </div>
+      <h1 class="hero-title">Find Your <span class="gradient-text">Perfect College</span></h1>
+      <p class="hero-subtitle">Answer a few questions about your academics, preferences, and budget — our AI will recommend the best colleges tailored just for you.</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">5,000+</span>
+          <span class="stat-label">Colleges</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">98%</span>
+          <span class="stat-label">Match Rate</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">2 min</span>
+          <span class="stat-label">To Complete</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Form Container -->
+  <main class="main-content">
+    <div class="form-shell">
+
+      <!-- Progress Bar -->
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width: 33.33%"></div>
+      </div>
+      <div class="progress-meta">
+        <span class="progress-text" id="progressText">Step 1 of 3 — Personal Information</span>
+        <span class="progress-percent" id="progressPercent">33%</span>
+      </div>
+
+      <form id="studentForm" novalidate>
+
+        <!-- ============ STEP 1: Personal Info ============ -->
+        <div class="form-step active" id="step1">
+          <div class="step-header">
+            <div class="step-icon-wrap" style="--icon-color: #6366f1;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div>
+              <h2 class="step-title">Personal Information</h2>
+              <p class="step-desc">Tell us a little about yourself to get started.</p>
+            </div>
+          </div>
+
+          <div class="fields-grid">
+
+            <!-- Full Name -->
+            <div class="field-group full-width" id="fg-name">
+              <label class="field-label" for="studentName">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Full Name <span class="required-star">*</span>
+              </label>
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  id="studentName"
+                  name="studentName"
+                  class="field-input"
+                  placeholder="e.g. Aditya Kumar Sharma"
+                  autocomplete="name"
+                  required
+                />
+                <span class="input-check" id="check-name"></span>
+              </div>
+              <span class="field-hint">Enter your full name as it appears on official documents.</span>
+              <span class="field-error" id="err-name"></span>
+            </div>
+
+            <!-- Class / Grade -->
+            <div class="field-group" id="fg-class">
+              <label class="field-label" for="studentClass">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Current Class / Grade <span class="required-star">*</span>
+              </label>
+              <div class="input-wrap select-wrap">
+                <select id="studentClass" name="studentClass" class="field-input field-select" required>
+                  <option value="" disabled selected>Select your class</option>
+                  <optgroup label="Secondary">
+                    <option value="10">Class 10 (SSC / SSLC)</option>
+                  </optgroup>
+                  <optgroup label="Higher Secondary">
+                    <option value="12">Class 12 (HSC / CBSE / ISC)</option>
+                  </optgroup>
+                  <optgroup label="Diploma / Other">
+                    <option value="diploma">Diploma</option>
+                    <option value="other">Other</option>
+                  </optgroup>
+                </select>
+                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="input-check" id="check-class"></span>
+              </div>
+              <span class="field-hint">Select your currently completed or ongoing class.</span>
+              <span class="field-error" id="err-class"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="field-group" id="fg-gender">
+              <label class="field-label" for="studentGender">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5.5 21v-2a4.5 4.5 0 0 1 9 0v2"/><path d="M19 21v-2a4.5 4.5 0 0 0-3.32-4.32"/></svg>
+                Gender <span class="required-star">*</span>
+              </label>
+              <div class="input-wrap select-wrap">
+                <select id="studentGender" name="studentGender" class="field-input field-select" required>
+                  <option value="" disabled selected>Select your gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="input-check" id="check-gender"></span>
+              </div>
+              <span class="field-hint">Used to filter colleges (e.g., Women's colleges).</span>
+              <span class="field-error" id="err-gender"></span>
+            </div>
+
+            <!-- Caste Category -->
+            <div class="field-group" id="fg-caste">
+              <label class="field-label" for="studentCaste">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Caste / Category <span class="required-star">*</span>
+              </label>
+              <div class="input-wrap select-wrap">
+                <select id="studentCaste" name="studentCaste" class="field-input field-select" required>
+                  <option value="" disabled selected>Select your category</option>
+                  <option value="general">General (Open)</option>
+                  <option value="obc">OBC — Other Backward Class</option>
+                  <option value="sc">SC — Scheduled Caste</option>
+                  <option value="st">ST — Scheduled Tribe</option>
+                  <option value="ews">EWS — Economically Weaker Section</option>
+                  <option value="vjnt">VJNT — Vimukta Jati & Nomadic Tribes</option>
+                  <option value="sbc">SBC — Special Backward Class</option>
+                  <option value="other">Other / Not Applicable</option>
+                </select>
+                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="input-check" id="check-caste"></span>
+              </div>
+              <span class="field-hint">Used only to show eligible reservation seats and scholarships.</span>
+              <span class="field-error" id="err-caste"></span>
+            </div>
+
+          </div>
+
+          <div class="step-actions">
+            <div></div>
+            <button type="button" class="btn btn-primary" id="next1" onclick="goToStep(2)">
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ============ STEP 2: Academic Details ============ -->
+        <div class="form-step" id="step2">
+          <div class="step-header">
+            <div class="step-icon-wrap" style="--icon-color: #8b5cf6;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <div>
+              <h2 class="step-title">Academic Details</h2>
+              <p class="step-desc">Share your marks and the course you want to pursue.</p>
+            </div>
+          </div>
+
+          <div class="fields-grid">
+
+            <!-- Desired Course (dynamic based on class) -->
+            <div class="field-group full-width" id="fg-course">
+              <label class="field-label" for="studentCourse">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                <span id="courseLabelText">Desired Course / Stream</span> <span class="required-star">*</span>
+              </label>
+
+              <!-- Context banner — shown when class 10 is selected -->
+              <div class="course-context-banner" id="courseContextBanner" style="display:none;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span id="courseContextText">Since you're in Class 10, select the degree you want after Intermediate (e.g., B.Tech for 10+2+4 route, or Medical stream for MBBS).</span>
+              </div>
+
+              <div class="input-wrap select-wrap">
+                <select id="studentCourse" name="studentCourse" class="field-input field-select" required>
+                  <option value="" disabled selected>Select the course you want to pursue</option>
+                  <optgroup label="Engineering &amp; Technology">
+                    <option value="btech-cs">B.Tech — Computer Science &amp; Engineering</option>
+                    <option value="btech-it">B.Tech — Information Technology</option>
+                    <option value="btech-mech">B.Tech — Mechanical Engineering</option>
+                    <option value="btech-civil">B.Tech — Civil Engineering</option>
+                    <option value="btech-eee">B.Tech — Electrical &amp; Electronics</option>
+                    <option value="btech-ai">B.Tech — Artificial Intelligence &amp; ML</option>
+                    <option value="btech-data">B.Tech — Data Science</option>
+                  </optgroup>
+                  <optgroup label="Medical &amp; Health Sciences">
+                    <option value="mbbs">MBBS — Bachelor of Medicine</option>
+                    <option value="bds">BDS — Bachelor of Dental Surgery</option>
+                    <option value="bpharm">B.Pharm — Bachelor of Pharmacy</option>
+                    <option value="bsc-nursing">B.Sc Nursing</option>
+                  </optgroup>
+                  <optgroup label="Management &amp; Commerce">
+                    <option value="bba">BBA — Bachelor of Business Administration</option>
+                    <option value="bcom">B.Com — Bachelor of Commerce</option>
+                    <option value="mba">MBA — Master of Business Administration</option>
+                  </optgroup>
+                  <optgroup label="Science &amp; Arts">
+                    <option value="bsc">B.Sc — Bachelor of Science</option>
+                    <option value="ba">BA — Bachelor of Arts</option>
+                    <option value="bca">BCA — Bachelor of Computer Applications</option>
+                    <option value="bsc-it">B.Sc — Information Technology</option>
+                  </optgroup>
+                  <optgroup label="Law &amp; Architecture">
+                    <option value="llb">LLB — Bachelor of Laws</option>
+                    <option value="barch">B.Arch — Bachelor of Architecture</option>
+                  </optgroup>
+                  <optgroup label="Other">
+                    <option value="other">Other / Not Listed</option>
+                  </optgroup>
+                </select>
+                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="input-check" id="check-course"></span>
+              </div>
+              <span class="field-hint" id="courseFieldHint">Choose the primary course or stream you'd like to study.</span>
+              <span class="field-error" id="err-course"></span>
+            </div>
+
+            <!-- Marks -->
+            <div class="field-group" id="fg-marks">
+              <label class="field-label" for="studentMarks">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Marks / Percentage (%) <span class="required-star">*</span>
+              </label>
+              <div class="input-wrap">
+                <input
+                  type="number"
+                  id="studentMarks"
+                  name="studentMarks"
+                  class="field-input"
+                  placeholder="e.g. 87.5"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  required
+                />
+                <span class="input-suffix">%</span>
+                <span class="input-check" id="check-marks"></span>
+              </div>
+              <span class="field-hint">Enter your overall percentage in your last exam.</span>
+              <span class="field-error" id="err-marks"></span>
+            </div>
+
+            <!-- Marks Breakdown (Optional) -->
+            <div class="field-group" id="fg-board">
+              <label class="field-label" for="studentBoard">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Examination Board
+              </label>
+              <div class="input-wrap select-wrap">
+                <select id="studentBoard" name="studentBoard" class="field-input field-select">
+                  <option value="" disabled selected>Select board (optional)</option>
+                  <option value="cbse">CBSE — Central Board of Secondary Education</option>
+                  <option value="icse">ICSE / ISC</option>
+                  <option value="state-maha">Maharashtra State Board (SSC/HSC)</option>
+                  <option value="state-up">UP Board</option>
+                  <option value="state-raj">Rajasthan Board</option>
+                  <option value="state-tn">Tamil Nadu Board</option>
+                  <option value="state-kar">Karnataka Board</option>
+                  <option value="state-other">Other State Board</option>
+                  <option value="nios">NIOS</option>
+                </select>
+                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <span class="field-hint">Helps us calculate normalized scores across boards.</span>
+            </div>
+
+            <!-- Marks Meter -->
+            <div class="field-group full-width">
+              <div class="marks-meter-card" id="marksMeterCard">
+                <div class="meter-label-row">
+                  <span class="meter-label">Score Indicator</span>
+                  <span class="meter-badge" id="meterBadge">Enter marks above</span>
+                </div>
+                <div class="meter-track">
+                  <div class="meter-fill" id="meterFill" style="width: 0%"></div>
+                  <div class="meter-zones">
+                    <div class="zone zone-low" title="Below 50%"></div>
+                    <div class="zone zone-avg" title="50–75%"></div>
+                    <div class="zone zone-good" title="75–90%"></div>
+                    <div class="zone zone-excel" title="90–100%"></div>
+                  </div>
+                </div>
+                <div class="meter-ticks">
+                  <span>0%</span><span>50%</span><span>75%</span><span>90%</span><span>100%</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn btn-ghost" onclick="goToStep(1)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="btn btn-primary" id="next2" onclick="goToStep(3)">
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ============ STEP 3: Preferences ============ -->
+        <div class="form-step" id="step3">
+          <div class="step-header">
+            <div class="step-icon-wrap" style="--icon-color: #06b6d4;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div>
+              <h2 class="step-title">Budget & Preferences</h2>
+              <p class="step-desc">Set your budget and location preferences for college search.</p>
+            </div>
+          </div>
+
+          <div class="fields-grid">
+
+            <!-- Annual Budget -->
+            <div class="field-group full-width" id="fg-budget">
+              <label class="field-label" for="studentBudget">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Annual Budget (₹) <span class="required-star">*</span>
+              </label>
+
+              <!-- Budget Range Selector -->
+              <div class="budget-options" id="budgetOptions">
+              <label class="budget-card" for="b1">
+                  <input type="radio" id="b1" name="budgetRange" value="0-50000" />
+                  <div class="budget-card-inner">
+                    <span class="budget-emoji">🏫</span>
+                    <span class="budget-range">₹15K – ₹50K</span>
+                    <span class="budget-desc">Govt. & aided colleges (min: ₹15K)</span>
+                  </div>
+                </label>
+                <label class="budget-card" for="b2">
+                  <input type="radio" id="b2" name="budgetRange" value="50000-150000" />
+                  <div class="budget-card-inner">
+                    <span class="budget-emoji">🏛️</span>
+                    <span class="budget-range">₹50K – ₹1.5L</span>
+                    <span class="budget-desc">Semi-govt. & trust colleges</span>
+                  </div>
+                </label>
+                <label class="budget-card" for="b3">
+                  <input type="radio" id="b3" name="budgetRange" value="150000-400000" />
+                  <div class="budget-card-inner">
+                    <span class="budget-emoji">🎓</span>
+                    <span class="budget-range">₹1.5L – ₹4L</span>
+                    <span class="budget-desc">Private universities</span>
+                  </div>
+                </label>
+                <label class="budget-card" for="b4">
+                  <input type="radio" id="b4" name="budgetRange" value="400000+" />
+                  <div class="budget-card-inner">
+                    <span class="budget-emoji">🏆</span>
+                    <span class="budget-range">Above ₹4L</span>
+                    <span class="budget-desc">Premium & deemed universities</span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Custom Budget Input -->
+              <div class="custom-budget-wrap">
+                <label class="custom-budget-label">Or enter exact annual budget:</label>
+                <div class="input-wrap">
+                  <span class="input-prefix">₹</span>
+                  <input
+                    type="number"
+                    id="studentBudget"
+                    name="studentBudget"
+                    class="field-input has-prefix"
+                    placeholder="e.g. 120000"
+                    min="0"
+                  />
+                </div>
+              </div>
+              <span class="field-hint">Include tuition, hostel, and other fees per year. Minimum ₹15,000/year. Too low budget? No colleges will match.</span>
+              <span class="field-error" id="err-budget"></span>
+            </div>
+
+            <!-- Location Preference -->
+            <div class="field-group" id="fg-location">
+              <label class="field-label" for="locationPref">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Preferred State / Location
+              </label>
+              <div class="input-wrap select-wrap">
+                <select id="locationPref" name="locationPref" class="field-input field-select">
+                  <option value="" disabled selected>Any state (optional)</option>
+                  <option value="any">No preference — Show all India</option>
+                  <optgroup label="West India">
+                    <option value="maharashtra">Maharashtra</option>
+                    <option value="gujarat">Gujarat</option>
+                    <option value="goa">Goa</option>
+                    <option value="rajasthan">Rajasthan</option>
+                  </optgroup>
+                  <optgroup label="South India">
+                    <option value="karnataka">Karnataka</option>
+                    <option value="tamilnadu">Tamil Nadu</option>
+                    <option value="telangana">Telangana</option>
+                    <option value="andhra">Andhra Pradesh</option>
+                    <option value="kerala">Kerala</option>
+                  </optgroup>
+                  <optgroup label="North India">
+                    <option value="delhi">Delhi / NCR</option>
+                    <option value="up">Uttar Pradesh</option>
+                    <option value="haryana">Haryana</option>
+                    <option value="punjab">Punjab</option>
+                  </optgroup>
+                  <optgroup label="East India">
+                    <option value="wb">West Bengal</option>
+                    <option value="odisha">Odisha</option>
+                    <option value="bihar">Bihar</option>
+                  </optgroup>
+                  <optgroup label="Central India">
+                    <option value="mp">Madhya Pradesh</option>
+                    <option value="cg">Chhattisgarh</option>
+                  </optgroup>
+                </select>
+                <svg class="select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+              <span class="field-hint">Narrow results to colleges in specific states.</span>
+            </div>
+
+            <!-- College Type -->
+            <div class="field-group" id="fg-college-type">
+              <label class="field-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                College Type Preference
+              </label>
+              <div class="toggle-group">
+                <label class="toggle-chip">
+                  <input type="checkbox" id="typeGovt" name="collegeType" value="govt" />
+                  <span>Government</span>
+                </label>
+                <label class="toggle-chip">
+                  <input type="checkbox" id="typePrivate" name="collegeType" value="private" />
+                  <span>Private</span>
+                </label>
+                <label class="toggle-chip">
+                  <input type="checkbox" id="typeDeemedUniv" name="collegeType" value="deemed" />
+                  <span>Deemed University</span>
+                </label>
+                <label class="toggle-chip">
+                  <input type="checkbox" id="typeAutonomous" name="collegeType" value="autonomous" />
+                  <span>Autonomous</span>
+                </label>
+              </div>
+              <span class="field-hint">You can select multiple options.</span>
+            </div>
+
+          </div>
+
+          <!-- Consent Notice -->
+          <div class="consent-box">
+            <div class="consent-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <p>Your data is used solely to generate personalized college recommendations. We do <strong>not</strong> share or sell your information to any third party.</p>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn btn-ghost" onclick="goToStep(2)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="submit" class="btn btn-submit" id="submitBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              Find My Colleges
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- ============ SUCCESS STATE ============ -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-animation">
+          <div class="success-circle">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <h2 class="success-title">Details Submitted! 🎉</h2>
+        <p class="success-subtitle">Our AI engine is now processing your profile and matching you with the best colleges.</p>
+
+        <div class="summary-card" id="summaryCard">
+          <!-- Dynamically filled by JS -->
+        </div>
+
+        <!-- College recommendation cards (filled by JS after API call) -->
+        <div class="results-section">
+          <h2 class="results-heading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Your Matched Colleges
+          </h2>
+          <div id="resultsArea">
+            <!-- College cards injected here by app.js -->
+          </div>
+        </div>
+
+        <div class="success-actions">
+          <button class="btn btn-primary" onclick="restartForm()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.41"/></svg>
+            Start Over
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-icon small">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <span>EduMatch</span>
+      </div>
+      <p class="footer-copy">© 2026 EduMatch. All data stays private. Built for students, by educators.</p>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Use</a>
+        <a href="#" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+/* =====================================================
+   EDUMATCH — Additional UI Components (Animations)
+   ===================================================== */
+
+/* Shimmer loading effect on skeleton elements */
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: relative;
+  display: inline-flex;
+}
+.tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #182035;
+  color: var(--txt-secondary);
+  font-size: 0.72rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border: 1px solid var(--clr-border);
+  z-index: 10;
+}
+.tooltip:hover::after { opacity: 1; }
+
+/* Notification toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 999;
+  animation: toastIn 0.3s ease forwards;
+  max-width: 340px;
+}
+.toast.error   { background: rgba(244,63,94,0.95); border: 1px solid rgba(244,63,94,0.4); }
+.toast.success { background: rgba(16,185,129,0.95); border: 1px solid rgba(16,185,129,0.4); }
+.toast.info    { background: rgba(99,102,241,0.95); border: 1px solid rgba(99,102,241,0.4); }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(20px); }
+}
+
+/* ══════════════════════════════════════════════════════
+   Profile Review Modal
+   ══════════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 16px;
+}
+
+.modal-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: var(--clr-bg-2);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md), 0 0 60px rgba(99, 102, 241, 0.15);
+  max-width: 500px;
+  width: 100%;
+  padding: 32px;
+  animation: modalSlideIn 0.3s ease forwards;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-overlay.visible .modal-content {
+  animation: modalSlideIn 0.3s ease forwards;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.modal-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--txt-primary);
+  margin-bottom: 6px;
+}
+
+.modal-header p {
+  font-size: 0.9rem;
+  color: var(--txt-secondary);
+}
+
+.profile-review-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding: 20px;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+}
+
+.profile-review-grid .review-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.review-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.review-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--txt-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.review-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--txt-primary);
+  word-break: break-word;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-footer .btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-footer .btn-primary {
+  background: var(--grad-submit);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.modal-footer .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.modal-footer .btn-secondary {
+  background: var(--clr-surface);
+  color: var(--txt-primary);
+  border: 1px solid var(--clr-border);
+}
+
+.modal-footer .btn-secondary:hover {
+  background: var(--clr-surface-hov);
+  border-color: var(--clr-border-focus);
+}
+
+.review-notice {
+  font-size: 0.85rem;
+  color: var(--txt-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 24px;
+  }
+
+  .profile-review-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .review-value {
+    font-size: 0.95rem;
+  }
+}

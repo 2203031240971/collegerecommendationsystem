@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "C:\Users\pdhar\OneDrive\Documents\Desktop\AI-powered college recommendation platform\backend\chat.py", line 138, in generate
+    text = getattr(chunk, "text", None)
+  File "C:\Users\pdhar\Miniconda3\Lib\site-packages\google\generativeai\types\generation_types.py", line 479, in text
+    raise ValueError(msg)
+ValueError: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 1.
