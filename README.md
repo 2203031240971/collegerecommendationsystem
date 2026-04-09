@@ -153,11 +153,3 @@ Developed as part of an AI-focused project to solve real-world problems using in
 ## ⭐ Conclusion
 
 EduMatch is not just a project — it's a **practical AI solution** that bridges the gap between students and the right educational opportunities.
-
----
-
-If you want, I can also:
-
-* 🔥 Make it **more recruiter-attractive**
-* 💼 Add **resume-style impact points**
-* 🌟 Or create a **short GitHub description + tags**
